@@ -1,5 +1,4 @@
 # Smart-Expense-Tracker
-# Smart-Expense-Tracker
 
 
 ## About the Application:
