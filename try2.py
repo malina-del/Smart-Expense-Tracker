@@ -23,7 +23,6 @@ Categorii_pentru_cheltuieli={
        ],
 
        "Haine si cumparaturi personale":
-
     ["Zara",
         "H&M",
         "Bershka",
@@ -45,7 +44,6 @@ Categorii_pentru_cheltuieli={
         ],
 
         "Placeri si relaxare":
-
     ["Cinema",
         "Teatru",
         "Concert",
@@ -62,7 +60,6 @@ Categorii_pentru_cheltuieli={
     ],
 
     "Mancare cumparata si fast food":
-
     ["McDonald's",
         "KFC",
         "Pizza Hut",
@@ -77,7 +74,6 @@ Categorii_pentru_cheltuieli={
     ],
 
     "Cafele si bauturi":
-
     ["Starbucks",
         "Costa Coffee",
         "Dunkin' Donuts",
@@ -92,7 +88,6 @@ Categorii_pentru_cheltuieli={
     ],
 
     "Facturi si abonamente":
-
     ["Electricitate",
         "Apa",
         "Gaz",
@@ -190,8 +185,9 @@ Categorii_pentru_cheltuieli={
     ]
 
 }
+#Punere in evidenta a categoriilor personalizate/gasirea categoriilor in functie de descrierea cheltuielii
 def identifica_categorie(descriere):
- 
+
   descriere = str(descriere).upper()
 
 def identifica_categorie(descriere):
@@ -206,10 +202,9 @@ def identifica_categorie(descriere):
 
     return "Alte cheltuieli"
 
-
+#Interfata aplicatiei
 st.title("Gestionare Cheltuieli");
 st.write("Acesta este un exemplu de aplicație Streamlit pentru gestionarea cheltuielilor.") ;
-
 # Initializam lista categoriilor personalizate
 if "categorii_personalizate" not in st.session_state:
     st.session_state["categorii_personalizate"] = []
@@ -280,13 +275,7 @@ for _, rand in tabel_limite.iterrows():
         st.session_state["limite_categorii"][categorie] = float(buget)
 
 st.divider()
-
-
-
 fisier_csv = st.file_uploader("Încarcă fișierul CSV cu cheltuielile tale", type=["csv"]);
-
-
-
 if fisier_csv is not None:
     df = pd.read_csv(fisier_csv)
 
@@ -351,13 +340,7 @@ if fisier_csv is not None:
         .reindex(toate_categoriile, fill_value=0)
         .reset_index()
     )
-
-    st.subheader("Total cheltuieli pe categorii")
-    st.bar_chart(
-        total_cheltuieli,
-        x="Categorie",
-        y="Suma"
-    )
+    
 
     # Adaugam limitele de buget
     total_cheltuieli["Buget alocat"] = (
@@ -408,8 +391,51 @@ if fisier_csv is not None:
                 f"IN GRAFIC: {categorie}. "
                 f"Mai ai {ramas:.2f} RON din buget."
             )
-
-
+    # Grafic cu bare
+    st.subheader("Total cheltuieli pe categorii")
+    
+    st.bar_chart(
+        total_cheltuieli,
+        x="Categorie",
+        y="Suma"
+    )
+    
+    # Grafic circular
+    st.subheader("Distributia cheltuielilor pe categorii")
+    
+    date_pie = total_cheltuieli[
+        total_cheltuieli["Suma"] > 0
+    ]
+    
+    if not date_pie.empty:
+        fig = px.pie(
+            date_pie,
+            names="Categorie",
+            values="Suma",
+            title="Procentul cheltuielilor pe categorii"
+        )
+    
+        fig.update_traces(
+            textinfo="label+percent",
+            hovertemplate=(
+                "%{label}<br>"
+                "Suma: %{value:.2f} RON<br>"
+                "Procent: %{percent}"
+                "<extra></extra>"
+            )
+        )
+    
+        st.plotly_chart(fig, use_container_width=True)
+    
+    else:
+        st.info("Nu exista cheltuieli in luna curenta.")
+    
+        st.subheader("Total cheltuieli pe categorii")
+        st.bar_chart(
+            total_cheltuieli,
+            x="Categorie",
+            y="Suma"
+        )        
 
 # Lista categoriilor personalizate de utilizator
 if "categorii_personalizate" not in st.session_state:
@@ -445,4 +471,5 @@ st.write(list(Categorii_pentru_cheltuieli.keys()))
 
 st.write("Categoriile tale:")
 st.write(st.session_state["categorii_personalizate"])
+
 
