@@ -19,6 +19,8 @@ This application is used to monitor someone's expenses for a month or even longe
 <img width="863" height="897" alt="screen2" src="https://github.com/user-attachments/assets/0073ef13-f16f-42a5-b842-da340bc753ae" />
 2.This is the application after parameters
 <img width="931" height="897" alt="screen3" src="https://github.com/user-attachments/assets/464a4d60-a5a4-447d-8f12-30f6f6175eb5" />
+<img width="795" height="562" alt="image" src="https://github.com/user-attachments/assets/a57c9ac0-ab92-4921-b693-43248949ed3c" />
+
 <img width="937" height="887" alt="screen4" src="https://github.com/user-attachments/assets/291750b2-818f-47ad-b599-0a698123354b" />
 
 ## Applications Used:
@@ -29,18 +31,35 @@ This application is used to monitor someone's expenses for a month or even longe
 - Streamlit
 
 ## Installation and Usage:
-1. The main structure is copied to obtain the data.
-2. The necessary libraries are installed for the actual design of the website, using the following command: `python -m pip install -r requirements.txt`
-3. The code is executed directly using `python -m streamlit run try2.py`.
-4. A web page will open where the user has to upload a CSV file downloaded from their bank's mobile application.
-5. The data will be extracted and read from the CSV file, and the transactions will be displayed in a table.
-6. The data will subsequently be sorted by category and displayed in tables and graphs.
-7. If the user does not have a suitable category or needs other categories, they can automatically add another category for easier and more efficient expense tracking.
-8. At the end, the user can also see how much they spent last month and compare the amounts.
-9. The user can also set a spending limit for each category and will receive a warning if the respective amount is exceeded.
+# Installation:
+1.Clone or download the project repository from GitHub.
+2.Make sure Python is installed on your computer.
+3.Open a terminal in the project folder.
+4Install the required libraries using the following command:
+python -m pip install -r requirements.txt
+# Running the Application
+5.Start the application by running:
+python -m streamlit run try2.py
+6.Open the local URL provided by Streamlit in your web browser.
+7.Set monthly spending limits for the available expense categories. Enter 0 if you do not want to set a limit.
+8.Upload a CSV file exported from your bank's mobile application. The file must contain the columns Data, Sum, and Description.
+9.View the uploaded transactions in a table. The application automatically assigns categories based on keywords found in transaction descriptions.
+10.Explore the chart displaying monthly expenses by category and the table showing the allocated budget, amount spent, and remaining budget.
+11.Review the budget notifications. The application displays a warning when spending reaches at least 80% of a budget and an alert when the budget is exceeded.
+12.Add custom expense categories using the Personalizeaza categoriile section.
+
+# Notes:
+13.The application analyzes expenses from the current calendar month.
+14.Negative transaction amounts are treated as expenses, while positive amounts are excluded from expense calculations.
+15.A budget limit of 0 means that no spending limit is set for that category.
+16.Custom categories and budget settings are stored in the current Streamlit session and are not permanently saved between sessions.
+
 
 ## Data:
-The CSV file is obtained directly from the bank's mobile application.
+The application requires a CSV file containing bank transaction data. The file must include the following columns:
+Data-the date when the transaction occurred.
+Sum-the transaction amount. Negative values represent expenses, while positive values represent incoming money.
+Description-a description of the transaction, usually containing the name of the merchant or service provider.
 ## How It Works:
 
 1. The user uploads a CSV file containing bank transactions.
