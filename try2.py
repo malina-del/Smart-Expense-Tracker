@@ -2,7 +2,6 @@ import io
 import pandas as pd
 import streamlit as st
 import plotly.express as px
-## python -m streamlit run try2.py
 Categorii_pentru_cheltuieli={
     "Alimente si bucatarie":
     ["Lidl", 
@@ -472,4 +471,6 @@ st.write(list(Categorii_pentru_cheltuieli.keys()))
 st.write("Categoriile tale:")
 st.write(st.session_state["categorii_personalizate"])
 
+
+## This has to be typed in the terminal after running the code: python -m streamlit run try2.py
 
